@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://pkx1ppk2j0ha"]
+[gd_scene format=3 uid="uid://bixkv5diu3bnh"]
 
-[ext_resource type="Script" uid="uid://d2f58gk68lnib" path="res://player.gd" id="1_80nbo"]
-[ext_resource type="Script" uid="uid://nyp2lmlfa7q0" path="res://grid.gd" id="2_e2o6t"]
-[ext_resource type="Script" uid="uid://bepsqag72xi7r" path="res://polygonplayer.gd" id="3_fc0e3"]
-[ext_resource type="PackedScene" uid="uid://cw7pcdkq6f3ym" path="res://enemy.tscn" id="4_fc0e3"]
-[ext_resource type="Script" uid="uid://biqirpv041t26" path="res://map.gd" id="5_7jktm"]
+[ext_resource type="Script" uid="uid://nyp2lmlfa7q0" path="res://grid.gd" id="1_al587"]
+[ext_resource type="Script" uid="uid://d2f58gk68lnib" path="res://player.gd" id="2_7o17b"]
+[ext_resource type="Script" uid="uid://bepsqag72xi7r" path="res://polygonplayer.gd" id="3_bearg"]
+[ext_resource type="PackedScene" uid="uid://cw7pcdkq6f3ym" path="res://enemy.tscn" id="4_7xqyn"]
+[ext_resource type="Script" uid="uid://biqirpv041t26" path="res://map.gd" id="5_jhl5n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jktm"]
 size = Vector2(28, 28)
@@ -12,27 +12,27 @@ size = Vector2(28, 28)
 [node name="Game" type="Node2D" unique_id=557638204]
 
 [node name="Grid" type="Node2D" parent="." unique_id=1231038755]
-script = ExtResource("2_e2o6t")
+script = ExtResource("1_al587")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=786476261]
 z_index = 100
 position = Vector2(96, 96)
-script = ExtResource("1_80nbo")
+script = ExtResource("2_7o17b")
 
 [node name="Polygon2D" type="Polygon2D" parent="Player" unique_id=1794263376]
 color = Color(0.1882353, 0.07450981, 1, 1)
-script = ExtResource("3_fc0e3")
+script = ExtResource("3_bearg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1725632104]
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_7jktm")
 
-[node name="Enemy" parent="." unique_id=542387746 instance=ExtResource("4_fc0e3")]
+[node name="Enemy" parent="." unique_id=542387746 instance=ExtResource("4_7xqyn")]
 z_index = 2
 position = Vector2(224, 224)
 
 [node name="Map" type="Node2D" parent="." unique_id=1445080665]
-script = ExtResource("5_7jktm")
+script = ExtResource("5_jhl5n")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1034506620]
 
@@ -44,3 +44,6 @@ offset_right = 292.0
 offset_bottom = 223.0
 scale = Vector2(3, 3)
 text = "GAME OVER"
+
+[node name="Enemy2" parent="." unique_id=130523946 instance=ExtResource("4_7xqyn")]
+position = Vector2(320, 320)

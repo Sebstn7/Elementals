@@ -18,6 +18,19 @@ func _ready():
 
 func _physics_process(delta):
 
+	# CAMBIAR NIVELES
+	if Input.is_action_just_pressed("level1"):
+
+		get_tree().change_scene_to_file(
+			"res://game.tscn"
+		)
+
+	if Input.is_action_just_pressed("level2"):
+
+		get_tree().change_scene_to_file(
+			"res://game_level2.tscn"
+		)
+
 	if moving:
 
 		global_position = global_position.move_toward(
@@ -49,9 +62,9 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("ui_up"):
 
 		input_direction = Vector2.UP
+
 	if input_direction != Vector2.ZERO:
 
-		# CAMBIAR DIRECCIÓN SIN MOVER
 		if input_direction != last_direction:
 
 			last_direction = input_direction
@@ -68,10 +81,10 @@ func _physics_process(delta):
 
 		hold_timer = 0
 
-	# CREAR BLOQUE
+	# CREAR / DESTRUIR BLOQUE
 	if Input.is_action_just_pressed("ui_accept"):
 
-		create_ice_block()
+		create_block()
 
 func move_player(direction):
 
@@ -82,7 +95,7 @@ func move_player(direction):
 		target_position += movement
 		moving = true
 
-func create_ice_block():
+func create_block():
 
 	var snapped_position = Vector2(
 		round(global_position.x / grid_size) * grid_size,
@@ -108,8 +121,6 @@ func create_ice_block():
 				return
 
 	var block = block_scene.instantiate()
-
 	block.global_position = block_position
 
 	get_parent().add_child(block)
-  

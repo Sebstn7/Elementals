@@ -40,8 +40,11 @@ func _physics_process(delta):
 
 	if global_position.distance_to(player.global_position) < 10:
 
-		print("GAME OVER")
+		var game_over_label = get_node("/root/Game/UI/Label")
 
+		game_over_label.visible = true
+
+		get_tree().paused = true
 func can_move(movement):
 
 	var collision = move_and_collide(movement, true)
