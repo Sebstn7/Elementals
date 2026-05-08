@@ -8,9 +8,12 @@ var target_position = Vector2.ZERO
 
 var direction = Vector2.RIGHT
 
+static var reserved_cells = []
+
 @onready var player = get_node("/root/Game/Player")
 
 func _ready():
+
 	target_position = global_position
 
 func _physics_process(delta):
@@ -25,6 +28,9 @@ func _physics_process(delta):
 		if global_position.distance_to(target_position) < 1:
 
 			global_position = target_position
+
+			reserved_cells.erase(target_position)
+
 			moving = false
 
 		return
@@ -35,27 +41,50 @@ func _physics_process(delta):
 
 	if can_move(movement):
 
-		target_position += movement
+		var next_position = target_position + movement
+
+		reserved_cells.append(next_position)
+
+		target_position = next_position
+
 		moving = true
+
+	else:
+
+		random_direction()
 
 	if global_position.distance_to(player.global_position) < 10:
 
-		var game_over_label = get_node("/root/Game/UI/Label")
+		var game_over_label = get_node(
+			"/root/Game/UI/Label"
+		)
 
 		game_over_label.visible = true
 
 		get_tree().paused = true
+
 func can_move(movement):
 
-	var collision = move_and_collide(movement, true)
+	var next_position = target_position + movement
 
-	if collision == null:
+	var player_snapped = Vector2(
+		round(player.global_position.x / grid_size) * grid_size,
+		round(player.global_position.y / grid_size) * grid_size
+	)
+
+	if next_position == player_snapped:
+
 		return true
 
-	if collision.get_collider() == player:
-		return true
+	if next_position in reserved_cells:
 
-	return false
+		return false
+
+	if test_move(transform, movement):
+
+		return false
+
+	return true
 
 func change_direction():
 
