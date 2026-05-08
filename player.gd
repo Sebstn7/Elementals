@@ -10,7 +10,7 @@ var last_direction = Vector2.RIGHT
 var hold_timer = 0.0
 var hold_delay = 0.1
 
-@onready var ice_block_scene = preload("res://block.tscn")
+@onready var block_scene = preload("res://block.tscn")
 
 func _ready():
 
@@ -49,8 +49,6 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("ui_up"):
 
 		input_direction = Vector2.UP
-
-	# SI PRESIONA UNA DIRECCIÓN
 	if input_direction != Vector2.ZERO:
 
 		# CAMBIAR DIRECCIÓN SIN MOVER
@@ -60,10 +58,8 @@ func _physics_process(delta):
 			hold_timer = 0
 			return
 
-		# CONTAR TIEMPO MANTENIENDO
 		hold_timer += delta
 
-		# MOVER SI YA PASÓ EL DELAY
 		if hold_timer >= hold_delay:
 
 			move_player(input_direction)
@@ -88,11 +84,30 @@ func move_player(direction):
 
 func create_ice_block():
 
-	var block_position = global_position + (
+	var snapped_position = Vector2(
+		round(global_position.x / grid_size) * grid_size,
+		round(global_position.y / grid_size) * grid_size
+	)
+
+	var block_position = snapped_position + (
 		last_direction * grid_size
 	)
 
-	var block = ice_block_scene.instantiate()
+	for child in get_parent().get_children():
+
+		if child.is_in_group("blocks"):
+
+			var child_snapped = Vector2(
+				round(child.global_position.x / grid_size) * grid_size,
+				round(child.global_position.y / grid_size) * grid_size
+			)
+
+			if child_snapped == block_position:
+
+				child.queue_free()
+				return
+
+	var block = block_scene.instantiate()
 
 	block.global_position = block_position
 
