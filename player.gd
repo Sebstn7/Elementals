@@ -10,6 +10,8 @@ var last_direction = Vector2.RIGHT
 var hold_timer = 0.0
 var hold_delay = 0.1
 
+var changing_level = false
+
 @onready var block_scene = preload("res://block.tscn")
 
 func _ready():
@@ -21,14 +23,26 @@ func _physics_process(delta):
 	# CAMBIAR NIVELES
 	if Input.is_action_just_pressed("level1"):
 
+		get_tree().paused = false
+
 		get_tree().change_scene_to_file(
 			"res://game.tscn"
 		)
 
 	if Input.is_action_just_pressed("level2"):
 
+		get_tree().paused = false
+
 		get_tree().change_scene_to_file(
 			"res://game_level2.tscn"
+		)
+
+	if Input.is_action_just_pressed("level3"):
+
+		get_tree().paused = false
+
+		get_tree().change_scene_to_file(
+			"res://game_level3.tscn"
 		)
 
 	if moving:
@@ -86,6 +100,10 @@ func _physics_process(delta):
 
 		create_block()
 
+	if not changing_level:
+
+		check_goals()
+
 func move_player(direction):
 
 	var movement = direction * grid_size
@@ -121,6 +139,33 @@ func create_block():
 				return
 
 	var block = block_scene.instantiate()
+
 	block.global_position = block_position
 
 	get_parent().add_child(block)
+
+func check_goals():
+
+	var goals = get_tree().get_nodes_in_group(
+		"goals"
+	)
+
+	if goals.size() == 0:
+
+		changing_level = true
+
+		get_tree().paused = false
+
+		if get_tree().current_scene.name == "Game":
+
+			get_tree().change_scene_to_file(
+				"res://game_level2.tscn"
+			)
+		elif get_tree().current_scene.name == "GameLevel2":
+
+			get_tree().change_scene_to_file(
+				"res://game_level3.tscn"
+			)
+		elif get_tree().current_scene.name == "GameLevel3":
+
+			print("GANASTE")

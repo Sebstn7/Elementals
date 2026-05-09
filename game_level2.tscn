@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bepsqag72xi7r" path="res://polygonplayer.gd" id="3_bearg"]
 [ext_resource type="PackedScene" uid="uid://cw7pcdkq6f3ym" path="res://enemy.tscn" id="4_7xqyn"]
 [ext_resource type="Script" uid="uid://biqirpv041t26" path="res://map.gd" id="5_jhl5n"]
+[ext_resource type="PackedScene" uid="uid://dnahu4ulnncbl" path="res://goal.tscn" id="6_7o17b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jktm"]
 size = Vector2(28, 28)
@@ -47,3 +48,11 @@ text = "GAME OVER"
 
 [node name="Enemy2" parent="." unique_id=130523946 instance=ExtResource("4_7xqyn")]
 position = Vector2(320, 320)
+
+[node name="Goal" parent="." unique_id=734839355 instance=ExtResource("6_7o17b")]
+position = Vector2(250, 250)
+
+[node name="Goal2" parent="." unique_id=1500385134 instance=ExtResource("6_7o17b")]
+position = Vector2(80, 400)
+
+[node name="Goal3" parent="." unique_id=1796307608 instance=ExtResource("6_7o17b")]

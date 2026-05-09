@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dnahu4ulnncbl"]
+
+[ext_resource type="Script" uid="uid://bjy8dlhu80n8o" path="res://goal.gd" id="1_6k3qi"]
+[ext_resource type="Script" uid="uid://c1fghstexyso5" path="res://polygongoal.gd" id="2_0qle8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qle8"]
+
+[node name="Goal" type="Area2D" unique_id=734839355 groups=["goals"]]
+position = Vector2(400, 400)
+script = ExtResource("1_6k3qi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=961811014]
+shape = SubResource("RectangleShape2D_0qle8")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=210715494]
+color = Color(0.16163176, 0.79939383, 0.46760464, 1)
+script = ExtResource("2_0qle8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
