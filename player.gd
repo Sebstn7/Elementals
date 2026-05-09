@@ -146,7 +146,15 @@ func create_block():
 
 func check_goals():
 
-	var goals = get_tree().get_nodes_in_group(
+	if not is_inside_tree():
+		return
+
+	var tree = get_tree()
+
+	if tree == null:
+		return
+
+	var goals = tree.get_nodes_in_group(
 		"goals"
 	)
 
@@ -154,18 +162,22 @@ func check_goals():
 
 		changing_level = true
 
-		get_tree().paused = false
+		tree.paused = false
 
-		if get_tree().current_scene.name == "Game":
+		var current_scene = tree.current_scene.scene_file_path
 
-			get_tree().change_scene_to_file(
+		if current_scene == "res://game.tscn":
+
+			tree.change_scene_to_file(
 				"res://game_level2.tscn"
 			)
-		elif get_tree().current_scene.name == "GameLevel2":
 
-			get_tree().change_scene_to_file(
+		elif current_scene == "res://game_level2.tscn":
+
+			tree.change_scene_to_file(
 				"res://game_level3.tscn"
 			)
-		elif get_tree().current_scene.name == "GameLevel3":
+
+		elif current_scene == "res://game_level3.tscn":
 
 			print("GANASTE")
